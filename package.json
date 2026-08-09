@@ -11,6 +11,7 @@
   "dependencies": {
     "@langchain/community": "^1.1.29",
     "@langchain/core": "^1.2.5",
+    "@langchain/google-genai": "^2.2.0",
     "@langchain/langgraph": "^1.4.9",
     "@langchain/openai": "^1.5.6",
     "axios": "^1.19.0",
@@ -20,6 +21,7 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "recharts": "^3.10.1",
+    "yahoo-finance2": "^4.0.2",
     "zod": "^4.4.3"
   },
   "devDependencies": {

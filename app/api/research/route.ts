@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
-import { researchCompany } from "@/services/research";
+
+import { runInvestmentGraph } from "@/agents/graph";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const company = body.company?.trim();
+    const company = body?.company;
 
-    if (!company) {
+    if (!company || typeof company !== "string") {
       return NextResponse.json(
         {
           success: false,
@@ -17,29 +18,24 @@ export async function POST(req: Request) {
       );
     }
 
-    const result = await researchCompany(company);
+    console.log(`API: Research requested for ${company}`);
 
-    if (!result?.success || !result.report) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Research failed",
-        },
-        { status: 500 }
-      );
-    }
+    const report = await runInvestmentGraph(company);
 
     return NextResponse.json({
       success: true,
-      report: result.report,
+      report,
     });
   } catch (error) {
-    console.error("Research API Error:", error);
+    console.error("Research API error:", error);
 
     return NextResponse.json(
       {
         success: false,
-        error: "Research failed",
+        error:
+          error instanceof Error
+            ? error.message
+            : "Research failed",
       },
       { status: 500 }
     );
