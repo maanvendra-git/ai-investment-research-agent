@@ -1,25 +1,27 @@
 # AI Investment Research Agent
 
-An AI-powered investment research agent that takes a company name, researches the company using financial, market, research, and news information, and produces an AI-generated **INVEST or PASS** recommendation with supporting reasoning.
+An AI-powered investment research agent that takes a public company name, researches financial information, market context, company information, and recent news, and produces a structured **INVEST or PASS** recommendation with supporting reasoning.
 
-The application is built as a full-stack Next.js application using **React, TypeScript, LangChain.js, and LangGraph.js**.
+The application is built as a full-stack Next.js application using React, TypeScript, LangChain.js, and LangGraph.js.
+
+> **Disclaimer:** This project is intended for educational, demonstration, and research purposes only. It is not professional financial advice.
 
 ---
 
 ## Overview
 
-The AI Investment Research Agent is designed to help users quickly research a public company and understand its potential investment outlook.
+The AI Investment Research Agent helps users quickly research a public company and understand its potential investment outlook.
 
-The user enters a company name, for example:
+The user enters a company name such as:
 
 - Apple
-- Tesla
+- NVIDIA
 - Microsoft
-- Nvidia
+- Tesla
 - Amazon
 - Google
 
-The agent then performs research and generates a structured investment research report.
+The research workflow gathers relevant information and generates a structured investment research report.
 
 The final report includes:
 
@@ -35,35 +37,37 @@ The final report includes:
 - Investment risks
 - Latest news
 
-The purpose of the project is to demonstrate how an AI-powered research agent can combine multiple research steps, external information, and LLM reasoning into a single investment research workflow.
-
-This project is intended for educational and research purposes and is not professional financial advice.
+The project demonstrates how an AI-powered research agent can combine multiple research steps, external information, and LLM reasoning into a single investment research workflow.
 
 ---
 
-# Tech Stack
+## Tech Stack
 
-## Frontend
+### Frontend
 
 - Next.js
 - React
 - TypeScript
 - Tailwind CSS
 
-## Backend
+### Backend
 
 - Next.js API Routes
 - Node.js
 
-## AI / Agent
+### AI / Agent
 
 - LangChain.js
 - LangGraph.js
-- LLM-based analysis
+- OpenAI
+- Google Gemini
 
-## Research / Data
+### Research / Data
 
-The application uses financial, company research, market, and news-related tools/services to gather information required for the investment analysis.
+- Financial data services
+- News API
+- Tavily research
+- Company and market research sources
 
 ---
 
@@ -72,24 +76,20 @@ The application uses financial, company research, market, and news-related tools
 ## 1. Clone the repository
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
-cd investment-agent
+git clone https://github.com/maanvendra-git/ai-investment-research-agent.git
+cd ai-investment-research-agent
 2. Install dependencies
 npm install
 3. Configure environment variables
 
 Create a .env.local file in the project root.
 
-Add the API keys required by the project.
-
-Example:
+Add the API keys required by the project:
 
 OPENAI_API_KEY=your_openai_api_key
 GEMINI_API_KEY=your_gemini_api_key
 NEWS_API_KEY=your_news_api_key
 TAVILY_API_KEY=your_tavily_api_key
-
-If additional API services are configured in the project, add their corresponding keys to .env.local.
 
 Do not commit .env.local or API keys to GitHub.
 
@@ -104,62 +104,60 @@ Open the URL in a browser.
 
 5. Run the agent
 
-Enter a company name into the search field.
+Enter a public company name into the search field.
 
 Example:
 
 Apple
 
-Click:
+Click Analyze.
 
-Analyze
-
-The application will run the research workflow and display the investment research report.
+The application runs the research workflow and displays the investment research report.
 
 How It Works
 High-Level Architecture
-                    USER
-                      |
-                      v
-             Company Name Input
-                      |
-                      v
-             Next.js Frontend
-                      |
-                      v
-              POST /api/research
-                      |
-                      v
-             Research API Route
-                      |
-                      v
-          LangGraph Investment Workflow
-                      |
-          +-----------+-----------+
-          |                       |
-          v                       v
-   Financial Research       News Research
-          |                       |
-          +-----------+-----------+
-                      |
-                      v
-                AI Analysis
-                      |
-                      v
-             Investment Decision
-                      |
-                      v
-             Structured Report
-                      |
-                      v
-               Next.js UI
+                         USER
+                           |
+                           v
+                  Company Name Input
+                           |
+                           v
+                   Next.js Frontend
+                           |
+                           v
+                  POST /api/research
+                           |
+                           v
+                   Research API Route
+                           |
+                           v
+                LangGraph Research Workflow
+                           |
+              +------------+------------+
+              |                         |
+              v                         v
+      Financial Research          News Research
+              |                         |
+              +------------+------------+
+                           |
+                           v
+                     AI Analysis
+                           |
+                           v
+                  Investment Decision
+                           |
+                           v
+                  Structured Report
+                           |
+                           v
+                     Next.js UI
 1. User Input
 
 The user enters a company name into the frontend.
 
-The frontend checks that the input is not empty before sending the request.
+The frontend validates that the input is not empty before sending the request.
 
-If no company name is entered, the application asks the user to enter one.
+If no company name is entered, the application asks the user to enter a company name.
 
 2. API Request
 
@@ -176,29 +174,28 @@ Example:
 }
 3. Backend Validation
 
-The Next.js API route receives the request and validates the company name.
+The Next.js API route receives and validates the request.
 
-If the company name is missing or invalid, the API returns a controlled 400 response.
-
-This prevents the research workflow from being executed with invalid input.
+Invalid or incomplete requests are handled through controlled error responses instead of allowing the application to crash.
 
 4. Investment Research Workflow
 
-After validation, the backend passes the company name to the investment research workflow implemented using LangGraph.
+After validation, the company name is passed to the investment research workflow implemented using LangGraph.
 
-The workflow coordinates the research and analysis steps required to produce the final investment report.
+The workflow coordinates multiple research and analysis steps.
 
-The research process can use different tools/services for:
+The research process can use:
 
 Financial information
-Company research
+Company information
 Market information
-Latest news
+Recent news
+Web research
 5. AI Analysis
 
 The collected research information is processed through the AI workflow.
 
-The AI generates structured investment insights including:
+The generated analysis includes:
 
 Company summary
 Financial analysis
@@ -225,17 +222,12 @@ The recommendation is accompanied by an investment score and confidence level.
 
 7. Frontend Report
 
-The structured result is displayed in the frontend using separate sections.
-
-This makes the research easier to read and allows the user to quickly understand the company's investment outlook.
+The structured result is displayed through separate sections in the dashboard so that users can quickly understand the company's investment outlook.
 
 Report Structure
-
-The generated report contains the following sections.
-
 Investment Recommendation
 
-The application displays:
+The application displays either:
 
 INVEST
 
@@ -248,11 +240,11 @@ A score from:
 
 0 - 100
 
-is displayed to represent the overall investment assessment.
+represents the overall investment assessment.
 
 Confidence
 
-The application displays a confidence percentage indicating how strongly the system supports the generated conclusion.
+A confidence percentage indicates how strongly the available research supports the generated conclusion.
 
 Summary
 
@@ -266,11 +258,7 @@ Revenue
 Profit
 Market Capitalization
 P/E Ratio
-Financial analysis
 SWOT Analysis
-
-The application displays:
-
 Strengths
 
 Important positive characteristics of the company.
@@ -289,7 +277,7 @@ External factors that could negatively affect the company.
 
 Investment Risks
 
-Important factors that could negatively impact the investment.
+Important factors that could negatively affect the investment.
 
 Latest News
 
@@ -298,7 +286,7 @@ Recent developments that may influence the investment outlook.
 Key Decisions & Trade-offs
 1. Using LangGraph for the Agent Workflow
 
-LangGraph was chosen to structure the investment research process as a workflow instead of relying on one large LLM prompt.
+LangGraph was chosen to structure the investment research process as a workflow rather than relying on a single large LLM prompt.
 
 This provides a clearer structure for coordinating multiple research and reasoning steps.
 
@@ -324,7 +312,7 @@ Score
 Confidence
 Trade-off
 
-Structured output requires more careful handling of missing or inconsistent fields, but provides a much better user experience and makes the results easier to understand.
+Structured output requires more careful handling of missing or inconsistent fields, but provides a much better user experience.
 
 3. INVEST / PASS Decision
 
@@ -342,7 +330,7 @@ The reasoning is shown alongside the recommendation instead of presenting only a
 
 Trade-off
 
-A binary recommendation is easy to understand and matches the assignment goal, but real investment decisions are much more nuanced.
+A binary recommendation is easy to understand and matches the assignment objective, but real-world investment decisions are considerably more nuanced.
 
 4. Investment Score and Confidence
 
@@ -356,7 +344,7 @@ These values make the AI output easier to interpret, but they should be treated 
 
 5. Handling Missing Data
 
-Financial data may not be available for every company.
+Financial or research data may not be available for every company.
 
 The application therefore uses fallback messages such as:
 
@@ -366,48 +354,60 @@ instead of allowing missing fields to break the interface.
 
 Trade-off
 
-This allows the system to continue working with incomplete information, but analysis based on limited data may have lower reliability.
+This allows the system to continue working with incomplete information, although analysis based on limited data may be less reliable.
 
 6. Graceful Error Handling
 
-The backend catches unexpected research errors and returns a controlled error response.
+The backend handles unexpected research errors and returns controlled responses.
 
-The frontend also handles failed requests and displays an error message instead of crashing the application.
+The frontend also handles failed requests and displays an error state instead of crashing.
 
 Trade-off
 
-Explicit error handling adds additional code, but makes the application more reliable and easier to debug.
+Explicit error handling adds additional implementation complexity but makes the application more reliable and easier to debug.
 
 Example Runs
 Example 1 — Apple
 Input
 Apple
-Example Output
+Result
 Recommendation: INVEST
 Investment Score: 85/100
 Confidence: 90%
 
 The generated report includes financial analysis, company strengths, weaknesses, opportunities, threats, investment risks, and latest news.
 
-The analysis highlights areas such as Apple's financial strength, ecosystem, brand loyalty, services business, and growth opportunities while also considering valuation, competition, regulatory pressure, and hardware-market risks.
+The analysis considers factors including Apple's financial strength, ecosystem, brand position, services business, growth opportunities, valuation, competition, regulatory pressure, and hardware-market risks.
 
-Example 2 — Unknown / Invalid Company
+Example 2 — NVIDIA
 Input
-xyzabc123notacompany
+Nvidia
+Result
+Recommendation: INVEST
+Investment Score: 88/100
+Confidence: 90%
 
-The application does not crash when sufficient financial information is unavailable.
+The generated report provides financial analysis, SWOT-style insights, investment risks, opportunities, and recent news.
 
-Instead, it produces a low-confidence result and clearly indicates that financial information is unavailable.
+The analysis considers NVIDIA's position in AI and semiconductors, financial performance, data-center demand, competitive environment, supply-chain dependencies, and geopolitical considerations.
 
-Example:
-
+Example 3 — Invalid Company
+Input
+not a company
+Result
 Recommendation: PASS
-Investment Score: 50/100
-Confidence: 10%
+Investment Score: 0/100
+Confidence: 100%
 
-The report also communicates the limitations of the available information.
+The application handles the invalid company input without crashing.
 
-This demonstrates that the system can handle companies for which sufficient research data cannot be found.
+Financial fields are shown as:
+
+Data not available
+
+The report also communicates that sufficient company information is unavailable for a meaningful investment analysis.
+
+This demonstrates graceful handling of unsupported or invalid company inputs.
 
 Error Handling
 
@@ -415,32 +415,19 @@ The application includes validation and error handling at multiple levels.
 
 Empty Input
 
-If the user clicks Analyze without entering a company name, the frontend displays:
+If the user clicks Analyze without entering a company name, the frontend requests that a company name be entered.
 
-Please enter a company name.
 Invalid API Request
 
-The backend validates the request body.
-
-If the company name is missing or invalid, the API returns:
-
-HTTP 400
-
-with an appropriate error message.
+The backend validates the request body and returns a controlled error response when the request is invalid.
 
 Research Failure
 
-Unexpected errors during the research workflow are caught by the backend.
-
-The API returns a controlled:
-
-HTTP 500
-
-response instead of allowing the server request to fail silently.
+Unexpected errors during the research workflow are handled by the backend rather than allowing the application to crash.
 
 Frontend Request Failure
 
-If the frontend receives an unsuccessful response, it displays a research error message to the user.
+If the frontend receives an unsuccessful response, it displays an appropriate research error state.
 
 Missing Data
 
@@ -451,31 +438,25 @@ Data not available
 instead of breaking the report.
 
 Project Structure
+
+The project is organized around the Next.js application, reusable UI components, research services, tools, and shared types.
+
 investment-agent/
-│
-├── agents/
-│   ├── graph.ts
-│   ├── investmentAgent.ts
-│   └── prompts.ts
 │
 ├── app/
 │   ├── api/
 │   │   └── research/
-│   │       ├── route.ts
-│   │       └── test-ai/
-│   │
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
+│   └── ...
 │
 ├── components/
-│   ├── Hero.tsx
-│   ├── Loading.tsx
+│   ├── NewsCard.tsx
 │   ├── RecentSearches.tsx
-│   └── FeatureCard.tsx
+│   ├── ResultDashboard.tsx
+│   ├── ScoreCard.tsx
+│   ├── SearchBar.tsx
+│   └── SWOTCard.tsx
 │
 ├── lib/
-│   └── openai.ts
 │
 ├── services/
 │   ├── finance.ts
@@ -488,9 +469,11 @@ investment-agent/
 │   └── tavily.ts
 │
 ├── types/
-│   └── investment.ts
 │
 ├── public/
+│
+├── docs/
+│   └── example-runs/
 │
 ├── .env.local
 ├── .gitignore
@@ -501,16 +484,72 @@ investment-agent/
 ├── postcss.config.mjs
 ├── eslint.config.mjs
 └── tsconfig.json
+
+.env.local is used locally for secrets and must not be committed or included in the final public repository.
+
+Live Deployment
+
+The application has been successfully deployed to Vercel.
+
+Live Demo
+
+https://ai-investment-research-agent-ebon.vercel.app
+
+The deployed application has been manually tested with:
+
+Apple
+NVIDIA
+Invalid company input
+
+The production deployment successfully renders the research dashboard and handles both valid and invalid inputs.
+
+LLM Usage & Build Process
+
+AI/LLM tools were used throughout the development process.
+
+AI assistance was used for:
+
+Understanding the assignment
+Architecture exploration
+Code generation
+Code refinement
+UI development
+Debugging
+Error handling
+Testing ideas
+Documentation
+Iterative problem solving
+
+The project was developed iteratively rather than being generated as one large implementation.
+
+The workflow involved:
+
+Understanding the assignment requirements.
+Designing the application architecture.
+Building the frontend.
+Implementing the research API.
+Implementing the AI research workflow.
+Integrating financial and news research.
+Building the structured investment dashboard.
+Testing real company inputs.
+Testing invalid company inputs.
+Resolving dependency and build issues.
+Deploying the application to Vercel.
+Testing the production deployment.
+Finalizing the project documentation.
+
+The development process also involved debugging dependency conflicts, validating production builds, and testing the deployed application with multiple inputs.
+
 What I Would Improve With More Time
-1. Add More Reliable Financial Data Sources
+1. More Reliable Financial Data Sources
 
-I would integrate additional financial data providers and cross-check important metrics across multiple sources.
+Integrate additional financial data providers and cross-check important metrics across multiple sources.
 
-This would reduce dependency on a single source and improve data reliability.
+This would reduce dependency on individual data sources and improve reliability.
 
-2. Add Source Citations
+2. Source Citations
 
-The application could display the exact source behind each important financial or news claim.
+Display the exact source behind important financial and news claims.
 
 For example:
 
@@ -520,9 +559,9 @@ Source: Financial Data Provider
 
 This would make the research more transparent and auditable.
 
-3. Add Historical Financial Charts
+3. Historical Financial Charts
 
-I would add visualizations for:
+Add visualizations for:
 
 Revenue growth
 Profit growth
@@ -532,9 +571,9 @@ Valuation trends
 
 over multiple years.
 
-4. Improve Investment Scoring
+4. Transparent Investment Scoring
 
-The investment score could be based on a transparent weighted model using factors such as:
+Develop a transparent weighted scoring model using factors such as:
 
 Financial health
 Growth
@@ -545,9 +584,9 @@ News sentiment
 
 This would make the scoring methodology easier to understand.
 
-5. Improve Confidence Calculation
+5. Improved Confidence Calculation
 
-Confidence could be calculated using factors such as:
+Confidence could consider:
 
 Amount of available data
 Data source quality
@@ -556,32 +595,28 @@ Agreement between multiple sources
 Completeness of financial metrics
 6. Company Comparison
 
-I would add a feature allowing users to compare multiple companies.
+Add the ability to compare multiple companies.
 
 Example:
 
-Apple vs Microsoft vs Nvidia
+Apple vs Microsoft vs NVIDIA
 
-The comparison could include:
+Possible comparison metrics:
 
 Revenue
 Profit
-Market cap
+Market capitalization
 P/E ratio
 Investment score
 Risk
 Confidence
 7. Portfolio-Level Research
 
-A future version could allow users to enter multiple holdings and generate portfolio-level research and risk insights.
+Allow users to enter multiple holdings and generate portfolio-level research and risk insights.
 
-8. Production Deployment
+8. Automated Testing
 
-I would deploy the application to a production environment such as Vercel and provide a public demo URL.
-
-9. Automated Testing
-
-I would add automated tests for:
+Add automated tests for:
 
 API validation
 Research workflow
@@ -590,11 +625,15 @@ Missing data
 Invalid company names
 Structured AI output
 Frontend error states
+9. Production Monitoring
+
+Add production monitoring, logging, and automated evaluation of AI outputs.
+
 Limitations
 
 The application is an AI-powered investment research prototype.
 
-The quality of the generated analysis depends on:
+The quality of generated analysis depends on:
 
 Availability of company information
 Accuracy of external data sources
@@ -603,53 +642,10 @@ Availability of APIs
 LLM reasoning
 Completeness of available financial data
 
-For companies with limited publicly available information, the application may produce lower-confidence results.
+For companies with limited publicly available information, the application may produce limited or lower-quality analysis.
 
-The generated recommendation should not be treated as guaranteed financial advice or a prediction of future stock performance.
+The generated recommendation should not be treated as a guaranteed prediction of future stock performance.
 
-AI Usage
-
-AI/LLM tools were used throughout the development process as required by the assignment.
-
-AI assistance was used for:
-
-Understanding the assignment
-Architecture exploration
-Code generation
-Code refinement
-Debugging
-UI development
-Error handling
-Testing ideas
-Documentation
-Iterative problem solving
-
-The application was developed iteratively by building features, running the application, testing real company searches, identifying issues, and refining the implementation.
-
-The final implementation was manually tested through the running application, including successful company research and unavailable/unknown company scenarios.
-
-Development Approach
-
-The project was developed incrementally rather than building the entire application in one step.
-
-The main development stages were:
-
-Create the Next.js application.
-Build the company search interface.
-Implement the backend research API.
-Implement the LangGraph investment research workflow.
-Integrate financial and research tools.
-Integrate news research.
-Generate structured investment analysis.
-Build the investment report UI.
-Add INVEST / PASS recommendation.
-Add score and confidence.
-Add SWOT and investment risk sections.
-Add latest news.
-Add input validation and error handling.
-Test the application with real and unknown company inputs.
-Push the project to GitHub.
-Prepare the project documentation for submission.
 Future Direction
 
 The project could be extended into a more complete AI investment research platform with:
