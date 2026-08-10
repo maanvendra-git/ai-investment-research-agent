@@ -89,14 +89,16 @@ export default function Home() {
 
   const report = result?.report;
 
-  return (
-    <main className="min-h-screen bg-slate-950 px-6 py-20">
+  return(
+
+    <main className="investment-page min-h-screen px-4 py-20">
       <div className="mx-auto max-w-6xl">
         <Hero
           company={company}
           setCompany={setCompany}
           onAnalyze={analyzeCompany}
         />
+        </div>
 
         {loading && <Loading />}
 
@@ -125,18 +127,24 @@ export default function Home() {
                   </h2>
                 </div>
 
-                <div className="rounded-xl bg-green-500/10 px-6 py-4 text-center">
+               <div
+  className={`rounded-2xl border px-7 py-5 text-center shadow-lg transition-all duration-300 ${
+    report.recommendation === "INVEST"
+      ? "border-emerald-400/30 bg-emerald-500/10 shadow-emerald-500/10"
+      : "border-red-400/30 bg-red-500/10 shadow-red-500/10"
+  }`}
+>
                   <p className="text-sm text-slate-400">
                     Recommendation
                   </p>
 
                   <p
-                    className={`text-2xl font-bold ${
-                      report.recommendation === "INVEST"
-                        ? "text-green-400"
-                        : "text-red-400"
-                    }`}
-                  >
+  className={`mt-1 text-3xl font-extrabold tracking-wide ${
+    report.recommendation === "INVEST"
+      ? "text-emerald-400"
+      : "text-red-400"
+  }`}
+>
                     {report.recommendation || "N/A"}
                   </p>
                 </div>
@@ -145,13 +153,13 @@ export default function Home() {
 
               {/* SCORE + CONFIDENCE */}
               <div className="mt-6 grid gap-4 md:grid-cols-2">
-
-                <div className="rounded-xl bg-slate-800 p-5">
+              <div className="group rounded-2xl border border-slate-700/70 bg-slate-800/80 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:bg-slate-800">
+                
                   <p className="text-sm text-slate-400">
                     Investment Score
                   </p>
 
-                  <p className="mt-2 text-4xl font-bold text-blue-400">
+                  <p className="mt-2 text-5xl font-extrabold text-blue-400">
                     {report.score ?? "N/A"}
 
                     {report.score !== undefined && (
@@ -160,14 +168,24 @@ export default function Home() {
                       </span>
                     )}
                   </p>
+
+                {report.score !== undefined && (
+  <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-700">
+    <div
+      className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all duration-1000"
+      style={{ width: `${report.score}%` }}
+    />
+  </div>
+)}
+
                 </div>
 
-                <div className="rounded-xl bg-slate-800 p-5">
+                <div className="group rounded-2xl border border-slate-700/70 bg-slate-800/80 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-purple-400/40 hover:bg-slate-800">
                   <p className="text-sm text-slate-400">
                     Confidence
                   </p>
 
-                  <p className="mt-2 text-4xl font-bold text-purple-400">
+                  <p className="mt-2 text-5xl font-extrabold text-purple-400">
                     {report.confidence ?? "N/A"}
 
                     {report.confidence !== undefined && "%"}
@@ -178,13 +196,13 @@ export default function Home() {
             </div>
 
             {/* SUMMARY */}
-            <div className="rounded-2xl border border-slate-700 bg-slate-900 p-6 text-white">
+            <div className="rounded-2xl border border-slate-700/70 bg-slate-900/80 p-7 text-white shadow-lg shadow-black/10 transition-all duration-300 hover:border-blue-400/30">
 
-              <h3 className="text-xl font-bold">
+              <h3 className="text-xl font-bold tracking-tight text-white">
                 Summary
               </h3>
 
-              <p className="mt-3 leading-7 text-slate-300">
+              <p className="mt-4 leading-7 text-slate-300/95">
                 {report.summary || "No summary available."}
               </p>
 
@@ -192,15 +210,15 @@ export default function Home() {
 
             {/* FINANCIAL ANALYSIS */}
             {report.financialAnalysis && (
-              <div className="rounded-2xl border border-slate-700 bg-slate-900 p-6 text-white">
+              <div className="rounded-2xl border border-slate-700/70 bg-slate-900/80 p-7 text-white shadow-lg shadow-black/10 transition-all duration-300 hover:border-blue-400/30">
 
-                <h3 className="text-xl font-bold text-blue-400">
+                <h3 className="text-xl font-bold tracking-tight text-blue-400">
                   Financial Analysis
                 </h3>
 
                 <div className="mt-5 grid gap-4 md:grid-cols-2">
 
-                  <div className="rounded-xl bg-slate-800 p-4">
+                  <div className="rounded-xl border border-slate-700/60 bg-slate-800/80 p-4 transition-all duration-300 hover:border-blue-400/30 hover:bg-slate-800">
                     <p className="text-sm text-slate-400">
                       Revenue
                     </p>
@@ -210,7 +228,7 @@ export default function Home() {
                     </p>
                   </div>
 
-                  <div className="rounded-xl bg-slate-800 p-4">
+                  <div className="rounded-xl border border-slate-700/60 bg-slate-800/80 p-4 transition-all duration-300 hover:border-blue-400/30 hover:bg-slate-800">
                     <p className="text-sm text-slate-400">
                       Profit
                     </p>
@@ -220,7 +238,7 @@ export default function Home() {
                     </p>
                   </div>
 
-                  <div className="rounded-xl bg-slate-800 p-4">
+                  <div className="rounded-xl border border-slate-700/60 bg-slate-800/80 p-4 transition-all duration-300 hover:border-blue-400/30 hover:bg-slate-800">
                     <p className="text-sm text-slate-400">
                       Market Cap
                     </p>
@@ -230,7 +248,7 @@ export default function Home() {
                     </p>
                   </div>
 
-                  <div className="rounded-xl bg-slate-800 p-4">
+                  <div className="rounded-xl border border-slate-700/60 bg-slate-800/80 p-4 transition-all duration-300 hover:border-blue-400/30 hover:bg-slate-800">
                     <p className="text-sm text-slate-400">
                       P/E Ratio
                     </p>
@@ -253,7 +271,6 @@ export default function Home() {
                     </p>
                   </div>
                 )}
-
               </div>
             )}
 
@@ -261,19 +278,19 @@ export default function Home() {
             <div className="grid gap-6 md:grid-cols-2">
 
               {/* STRENGTHS */}
-              <div className="rounded-2xl border border-slate-700 bg-slate-900 p-6 text-white">
+              <div className="rounded-2xl border border-green-500/30 bg-slate-900/80 p-6 text-white shadow-lg shadow-green-500/5 transition-all duration-300 hover:border-green-400/50 hover:-translate-y-0.5">
 
-                <h3 className="text-xl font-bold text-green-400">
-                  Strengths
+                <h3 className="flex items-center gap-2 text-xl font-bold text-green-400">
+                 💪 Strengths
                 </h3>
 
-                <ul className="mt-4 space-y-3">
+                <ul className="mt-5 space-y-3">
                   {(report.strengths ?? []).length > 0 ? (
                     report.strengths!.map(
                       (item: string, index: number) => (
                         <li
                           key={index}
-                          className="text-slate-300"
+                          className="rounded-lg border border-green-500/10 bg-slate-800/50 px-3 py-2.5 text-sm leading-6 text-slate-300 transition-all duration-200 hover:border-green-400/30 hover:bg-slate-800"
                         >
                           ✓ {item}
                         </li>
@@ -289,172 +306,266 @@ export default function Home() {
               </div>
 
               {/* WEAKNESSES */}
-              <div className="rounded-2xl border border-slate-700 bg-slate-900 p-6 text-white">
+<div className="group rounded-2xl border border-yellow-500/30 bg-slate-900 p-6 text-white shadow-lg transition-all duration-300 hover:border-yellow-400/60 hover:shadow-yellow-500/10">
 
-                <h3 className="text-xl font-bold text-yellow-400">
-                  Weaknesses
-                </h3>
+  <div className="mb-5 flex items-center gap-3">
+    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-yellow-500/10 text-xl">
+      ⚠️
+    </div>
 
-                <ul className="mt-4 space-y-3">
-                  {(report.weaknesses ?? []).length > 0 ? (
-                    report.weaknesses!.map(
-                      (item: string, index: number) => (
-                        <li
-                          key={index}
-                          className="text-slate-300"
-                        >
-                          • {item}
-                        </li>
-                      )
-                    )
-                  ) : (
-                    <li className="text-slate-500">
-                      No weakness data available.
-                    </li>
-                  )}
-                </ul>
+    <div>
+      <h3 className="text-xl font-bold text-yellow-400">
+        Weaknesses
+      </h3>
 
-              </div>
+      <p className="text-sm text-slate-400">
+        Key factors that may negatively impact the investment
+      </p>
+    </div>
+  </div>
 
-              {/* OPPORTUNITIES */}
-              <div className="rounded-2xl border border-slate-700 bg-slate-900 p-6 text-white">
+  <div className="space-y-3">
+    {report.weaknesses && report.weaknesses.length > 0 ? (
+      report.weaknesses.map(
+        (item: string, index: number) => (
+          <div
+            key={index}
+            className="rounded-xl border border-slate-700/70 bg-slate-800/60 p-4 transition-all duration-200 hover:border-yellow-500/30 hover:bg-slate-800"
+          >
+            <div className="flex items-start gap-3">
 
-                <h3 className="text-xl font-bold text-blue-400">
-                  Opportunities
-                </h3>
+              <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-yellow-500/10 text-xs font-bold text-yellow-400">
+                {index + 1}
+              </span>
 
-                <ul className="mt-4 space-y-3">
-                  {(report.opportunities ?? []).length > 0 ? (
-                    report.opportunities!.map(
-                      (item: string, index: number) => (
-                        <li
-                          key={index}
-                          className="text-slate-300"
-                        >
-                          ↑ {item}
-                        </li>
-                      )
-                    )
-                  ) : (
-                    <li className="text-slate-500">
-                      No opportunity data available.
-                    </li>
-                  )}
-                </ul>
-
-              </div>
-
-              {/* THREATS */}
-              <div className="rounded-2xl border border-slate-700 bg-slate-900 p-6 text-white">
-
-                <h3 className="text-xl font-bold text-red-400">
-                  Threats
-                </h3>
-
-                <ul className="mt-4 space-y-3">
-                  {(report.threats ?? []).length > 0 ? (
-                    report.threats!.map(
-                      (item: string, index: number) => (
-                        <li
-                          key={index}
-                          className="text-slate-300"
-                        >
-                          ⚠ {item}
-                        </li>
-                      )
-                    )
-                  ) : (
-                    <li className="text-slate-500">
-                      No threat data available.
-                    </li>
-                  )}
-                </ul>
-
-              </div>
+              <p className="leading-relaxed text-slate-200">
+                {item}
+              </p>
 
             </div>
-
-            {/* INVESTMENT RISKS */}
-            <div className="rounded-2xl border border-red-500/20 bg-slate-900 p-6 text-white">
-
-              <h3 className="text-xl font-bold text-red-400">
-                Investment Risks
-              </h3>
-
-              <ul className="mt-4 space-y-3">
-                {(report.risks ?? []).length > 0 ? (
-                  report.risks!.map(
-                    (item: string, index: number) => (
-                      <li
-                        key={index}
-                        className="text-slate-300"
-                      >
-                        ⚠ {item}
-                      </li>
-                    )
-                  )
-                ) : (
-                  <li className="text-slate-500">
-                    No risk data available.
-                  </li>
-                )}
-              </ul>
-
-            </div>
-
-            {/* LATEST NEWS */}
-            <div className="rounded-2xl border border-slate-700 bg-slate-900 p-6 text-white">
-
-              <h3 className="text-xl font-bold text-blue-400">
-                Latest News
-              </h3>
-
-              <div className="mt-4 space-y-4">
-
-                {report.newsAnalysis &&
-                report.newsAnalysis.length > 0 ? (
-                  report.newsAnalysis.map(
-                    (item, index) => (
-                      <div
-                        key={index}
-                        className="rounded-xl bg-slate-800 p-4"
-                      >
-
-                        <p className="font-semibold text-slate-200">
-                          📰 {item.headline || "News"}
-                        </p>
-
-                        <p className="mt-2 text-slate-400">
-                          {item.takeaway ||
-                            "No takeaway available."}
-                        </p>
-
-                      </div>
-                    )
-                  )
-                ) : report.news && report.news.length > 0 ? (
-                  report.news.map(
-                    (item: string, index: number) => (
-                      <div
-                        key={index}
-                        className="rounded-xl bg-slate-800 p-4 text-slate-300"
-                      >
-                        📰 {item}
-                      </div>
-                    )
-                  )
-                ) : (
-                  <p className="text-slate-500">
-                    No latest news available.
-                  </p>
-                )}
-
-              </div>
-
-            </div>
-
           </div>
-        )}
+        )
+      )
+    ) : (
+      <div className="rounded-xl border border-slate-700/70 bg-slate-800/60 p-4">
+        <p className="text-slate-500">
+          No weakness data available.
+        </p>
+      </div>
+    )}
+  </div>
+
+</div>
+
+             {/* OPPORTUNITIES */}
+<div className="group rounded-2xl border border-blue-500/30 bg-slate-900 p-6 text-white shadow-lg transition-all duration-300 hover:border-blue-400/60 hover:shadow-blue-500/10">
+
+  <div className="mb-5 flex items-center gap-3">
+    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/10 text-xl">
+      🚀
+    </div>
+
+    <div>
+      <h3 className="text-xl font-bold text-blue-400">
+        Opportunities
+      </h3>
+
+      <p className="text-sm text-slate-400">
+        Growth opportunities that could improve the investment outlook
+      </p>
+    </div>
+  </div>
+
+  <div className="space-y-3">
+    {report.opportunities && report.opportunities.length > 0 ? (
+      report.opportunities.map(
+        (item: string, index: number) => (
+          <div
+            key={index}
+            className="rounded-xl border border-slate-700/70 bg-slate-800/60 p-4 transition-all duration-200 hover:border-blue-500/30 hover:bg-slate-800"
+          >
+            <div className="flex items-start gap-3">
+
+              <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-500/10 text-xs font-bold text-blue-400">
+                {index + 1}
+              </span>
+
+              <p className="leading-relaxed text-slate-200">
+                {item}
+              </p>
+
+            </div>
+          </div>
+        )
+      )
+    ) : (
+      <div className="rounded-xl border border-slate-700/70 bg-slate-800/60 p-4">
+        <p className="text-slate-500">
+          No opportunity data available.
+        </p>
+      </div>
+    )}
+  </div>
+
+</div>
+
+             {/* THREATS */}
+<div className="group rounded-2xl border border-red-500/30 bg-slate-900 p-6 text-white shadow-lg transition-all duration-300 hover:border-red-400/60 hover:shadow-red-500/10">
+
+  <div className="mb-5 flex items-center gap-3">
+    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-500/10 text-xl">
+      🛡️
+    </div>
+
+    <div>
+      <h3 className="text-xl font-bold text-red-400">
+        Threats
+      </h3>
+
+      <p className="text-sm text-slate-400">
+        External factors that could negatively affect the company
+      </p>
+    </div>
+  </div>
+
+  <div className="space-y-3">
+    {report.threats && report.threats.length > 0 ? (
+      report.threats.map(
+        (item: string, index: number) => (
+          <div
+            key={index}
+            className="rounded-xl border border-slate-700/70 bg-slate-800/60 p-4 transition-all duration-200 hover:border-red-500/30 hover:bg-slate-800"
+          >
+            <div className="flex items-start gap-3">
+
+              <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-500/10 text-xs font-bold text-red-400">
+                {index + 1}
+              </span>
+
+              <p className="leading-relaxed text-slate-200">
+                {item}
+              </p>
+
+            </div>
+          </div>
+        )
+      )
+    ) : (
+      <div className="rounded-xl border border-slate-700/70 bg-slate-800/60 p-4">
+        <p className="text-slate-500">
+          No threat data available.
+        </p>
+      </div>
+    )}
+  </div>
+
+</div>
+
+           {/* INVESTMENT RISKS */}
+<div className="rounded-2xl border border-red-500/30 bg-slate-900/80 p-6 text-white shadow-lg shadow-red-500/5">
+  <div className="flex items-center gap-3 mb-5">
+    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-500/10 text-xl">
+      ⚠️
+    </div>
+
+    <div>
+      <h3 className="text-xl font-bold text-red-400">
+        Investment Risks
+      </h3>
+      <p className="text-sm text-slate-400">
+        Key factors that could negatively impact the investment
+      </p>
+    </div>
+  </div>
+
+  <div className="space-y-3">
+    {report.risks && report.risks.length > 0 ? (
+      report.risks.map((item: string, index: number) => (
+        <div
+          key={index}
+          className="flex items-start gap-3 rounded-xl border border-red-500/10 bg-slate-800/60 p-4 transition hover:border-red-500/30"
+        >
+          <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-500/10 text-sm text-red-400">
+            {index + 1}
+          </span>
+
+          <p className="text-sm leading-6 text-slate-300">
+            {item}
+          </p>
+        </div>
+      ))
+    ) : (
+      <div className="rounded-xl bg-slate-800/60 p-4">
+        <p className="text-sm text-slate-500">
+          No risk data available.
+        </p>
+      </div>
+    )}
+  </div>
+</div>
+
+           {/* LATEST NEWS */}
+<div className="rounded-2xl border border-blue-500/30 bg-slate-900/80 p-6 text-white shadow-lg shadow-blue-500/5">
+  <div className="flex items-center gap-3 mb-5">
+    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/10 text-xl">
+      📰
+    </div>
+
+    <div>
+      <h3 className="text-xl font-bold text-blue-400">
+        Latest News
+      </h3>
+      <p className="text-sm text-slate-400">
+        Recent developments that may influence the investment outlook
+      </p>
+    </div>
+  </div>
+
+  <div className="space-y-3">
+    {report.newsAnalysis && report.newsAnalysis.length > 0 ? (
+      report.newsAnalysis.map((item, index) => (
+        <div
+          key={index}
+          className="rounded-xl border border-blue-500/10 bg-slate-800/60 p-4 transition hover:border-blue-500/30 hover:bg-slate-800"
+        >
+          <div className="flex items-start gap-3">
+            <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-sm">
+              📰
+            </div>
+
+            <div className="min-w-0">
+              <p className="font-semibold leading-6 text-slate-100">
+                {item.headline || "Latest News"}
+              </p>
+
+              <p className="mt-2 text-sm leading-6 text-slate-400">
+                {item.takeaway || "No takeaway available."}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))
+    ) : report.news && report.news.length > 0 ? (
+      report.news.map((item: string, index: number) => (
+        <div
+          key={index}
+          className="rounded-xl border border-blue-500/10 bg-slate-800/60 p-4 transition hover:border-blue-500/30 hover:bg-slate-800"
+        >
+          <div className="flex items-start gap-3">
+            <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-sm">
+              📰
+            </div>
+
+            <p className="text-sm leading-6 text-slate-300">
+              {item}
+            </p>
+          </div>
+        </div>
+      ))
+    ) : null}
+  </div>
+</div>
+        </div>
 
         {/* RECENT SEARCHES */}
         <RecentSearches />
@@ -479,7 +590,7 @@ export default function Home() {
 
         </div>
 
-      </div>
+      </div>)}
     </main>
   );
 }
