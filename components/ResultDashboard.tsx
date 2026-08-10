@@ -1,5 +1,8 @@
 interface ResultDashboardProps {
-  data: any;
+ data: {
+  company: string;
+  message: string;
+  };
 }
 
 export default function ResultDashboard({

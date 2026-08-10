@@ -1,3 +1,12 @@
+interface NewsArticle {
+  title: string;
+  description: string | null;
+  source?: {
+    name?: string;
+  };
+  url: string;
+  publishedAt: string;
+}
 export async function getCompanyNews(company: string) {
   const apiKey = process.env.NEWS_API_KEY;
 
@@ -25,8 +34,7 @@ export async function getCompanyNews(company: string) {
   }
 
   const data = await response.json();
-
-  return data.articles.map((article: any) => ({
+return data.articles.map((article: NewsArticle) => ({
     title: article.title,
     description: article.description,
     source: article.source?.name,
