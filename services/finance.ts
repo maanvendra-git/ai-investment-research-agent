@@ -1,5 +1,11 @@
 import YahooFinance from "yahoo-finance2";
 
+interface YahooSearchQuote {
+  isYahooFinance?: boolean;
+  quoteType?: string;
+  symbol?: string;
+}
+
 const yahooFinance = new YahooFinance();
 
 function formatNumber(value: unknown): string {
@@ -34,7 +40,7 @@ export async function getFinancialData(company: string) {
     const searchResult = await yahooFinance.search(company);
 
     const quoteResult = searchResult.quotes?.find(
-      (quote: any) =>
+      (quote: YahooSearchQuote) =>
         quote.isYahooFinance &&
         quote.quoteType === "EQUITY" &&
         typeof quote.symbol === "string" &&

@@ -41,16 +41,19 @@ export const webResearchTool = tool(
     }
 
     const data = await response.json();
-
     return JSON.stringify({
       answer: data.answer ?? "",
       results: (data.results ?? []).map(
-        (result: any) => ({
+        (result: {
+          title?: string;
+          url?: string;
+          content?: string;
+          published_date?: string;
+        }) => ({
           title: result.title ?? "",
           url: result.url ?? "",
           content: result.content ?? "",
-          publishedDate:
-            result.published_date ?? "",
+          publishedDate: result.published_date ?? "",
         })
       ),
     });

@@ -1,7 +1,37 @@
 import { getFinancialData } from "./finance";
 import { getCompanyNews } from "./news";
 
-export async function researchCompany(company: string): Promise<any> {
+
+interface ResearchReport {
+  company: string;
+  recommendation: "INVEST" | "PASS";
+  score: number;
+  confidence: number;
+  summary: string;
+  strengths: string[];
+  weaknesses: string[];
+  opportunities: string[];
+  threats: string[];
+  risks: string[];
+  news: string[];
+  financialAnalysis: {
+    revenue: string;
+    profit: string;
+    marketCap: string;
+    peRatio: string;
+  };
+  newsAnalysis: {
+    headline: string;
+    takeaway: string;
+  }[];
+}
+
+interface ResearchResult {
+  success: boolean;
+  report: ResearchReport;
+}
+
+export async function researchCompany(company: string): Promise<ResearchResult>  {
   const geminiKey = process.env.GEMINI_API_KEY;
 
   if (!geminiKey) {
@@ -156,14 +186,14 @@ ADDITIONAL RULES:
     throw new Error("Gemini returned an empty response");
   }
 
-  let report;
+  let report: ResearchReport;
 
   try {
     report = JSON.parse(text);
-  } catch (error) {
-    console.error("GEMINI RAW TEXT:", text);
-    throw new Error("Gemini returned invalid JSON");
-  }
+ } catch {
+  console.error("GEMINI RAW TEXT:", text);
+  throw new Error("Gemini returned invalid JSON");
+}
 
   // Make sure arrays always exist so frontend never crashes
   report.strengths = Array.isArray(report.strengths)
