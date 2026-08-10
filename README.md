@@ -85,6 +85,9 @@ Add the API keys required by the project.
 Example:
 
 OPENAI_API_KEY=your_openai_api_key
+GEMINI_API_KEY=your_gemini_api_key
+NEWS_API_KEY=your_news_api_key
+TAVILY_API_KEY=your_tavily_api_key
 
 If additional API services are configured in the project, add their corresponding keys to .env.local.
 
